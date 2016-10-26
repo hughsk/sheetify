@@ -21,7 +21,8 @@
     "css-modules"
   ],
   "dependencies": {
-    "falafel": "^1.2.0",
+    "acorn-jsx": "^3.0.1",
+    "fresh-falafel": "^1.2.0",
     "insert-css": "^1.0.0",
     "is-stream": "^1.0.1",
     "map-limit": "0.0.1",

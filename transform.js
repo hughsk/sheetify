@@ -1,9 +1,10 @@
 const cssResolve = require('style-resolve').sync
 const staticEval = require('static-eval')
+const falafel = require('fresh-falafel')
 const mapLimit = require('map-limit')
 const isStream = require('is-stream')
 const through = require('through2')
-const falafel = require('falafel')
+const acorn = require('acorn-jsx')
 const assert = require('assert')
 const xtend = require('xtend')
 const path = require('path')
@@ -63,9 +64,15 @@ function transform (filename, options) {
       return
     }
 
+    const parseOpts = {
+      parser: acorn,
+      ecmaVersion: 6,
+      plugins: { jsx: true }
+    }
+
     try {
-      const tmpAst = falafel(src, { ecmaVersion: 6 }, identifyModuleName)
-      ast = falafel(tmpAst.toString(), { ecmaVersion: 6 }, extractNodes)
+      const tmpAst = falafel(src, parseOpts, identifyModuleName)
+      ast = falafel(tmpAst.toString(), parseOpts, extractNodes)
     } catch (err) {
       return self.emit('error', err)
     }
